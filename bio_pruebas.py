@@ -145,72 +145,72 @@ class anotherWinAlign(gtk.Window):
         print(text_pais_seq1)
         if (text_pais_seq1 == "Argentina"):
             self.selec_especie_seq1.get_model().clear()
-            bd_argen= open('/home/alexandra/Escritorio/Paises_selec/fauna_endemica_Argentina','r')
+            bd_argen= open('Paises_selec/fauna_endemica_Argentina','r')
             for item in bd_argen.readlines():
                 self.selec_especie_seq1.append_text(item)
         elif (text_pais_seq1 == "Australia"):
             self.selec_especie_seq1.get_model().clear()
-            bd_austr= open('/home/alexandra/Escritorio/Paises_selec/fauna_endemica_Australia','r')
+            bd_austr= open('Paises_selec/fauna_endemica_Australia','r')
             for item in bd_austr.readlines():
                 self.selec_especie_seq1.append_text(item)
         elif (text_pais_seq1 == "Brasil"): 
             self.selec_especie_seq1.get_model().clear()
-            bd_brasil= open('/home/alexandra/Escritorio/Paises_selec/fauna_endemica_Brasil','r')
+            bd_brasil= open('Paises_selec/fauna_endemica_Brasil','r')
             for item in bd_brasil.readlines():
                 self.selec_especie_seq1.append_text(item)
         elif (text_pais_seq1 == "China"):
             self.selec_especie_seq1.get_model().clear()
-            bd_chi= open('/home/alexandra/Escritorio/Paises_selec/fauna_endemica_China','r')
+            bd_chi= open('Paises_selec/fauna_endemica_China','r')
             for item in bd_chi.readlines():
                 self.selec_especie_seq1.append_text(item)
         elif (text_pais_seq1 == "Colombia"): 
             self.selec_especie_seq1.get_model().clear()
-            bd_colo= open('/home/alexandra/Escritorio/Paises_selec/fauna_endemica_Colombia','r')
+            bd_colo= open('Paises_selec/fauna_endemica_Colombia','r')
             for item in bd_colo.readlines():
                 self.selec_especie_seq1.append_text(item)
         elif (text_pais_seq1 == "Filipinas"):
             self.selec_especie_seq1.get_model().clear()
-            bd_fili= open('/home/alexandra/Escritorio/Paises_selec/fauna_endemica_Filipinas','r')
+            bd_fili= open('Paises_selec/fauna_endemica_Filipinas','r')
             for item in fili.readlines():
                 self.selec_especie_seq1.append_text(item)
         elif (text_pais_seq1 == "India"): 
             self.selec_especie_seq1.get_model().clear()
-            bd_indi= open('/home/alexandra/Escritorio/Paises_selec/fauna_endemica_India','r')
+            bd_indi= open('Paises_selec/fauna_endemica_India','r')
             for item in bd_indi.readlines():
                 self.selec_especie_seq1.append_text(item)
         elif (text_pais_seq1 == "Indonesia"):
             self.selec_especie_seq1.get_model().clear()
-            bd_indo= open('/home/alexandra/Escritorio/Paises_selec/fauna_endemica_Indonesia','r')
+            bd_indo= open('Paises_selec/fauna_endemica_Indonesia','r')
             for item in bd_indo.readlines():
                 self.selec_especie_seq1.append_text(item)
         elif (text_pais_seq1 == "Jamaica"): 
             self.selec_especie_seq1.get_model().clear()
-            bd_jama= open('/home/alexandra/Escritorio/Paises_selec/fauna_endemica_Jamaica','r')
+            bd_jama= open('Paises_selec/fauna_endemica_Jamaica','r')
             for item in bd_jama.readlines():
                 self.selec_especie_seq1.append_text(item)
         elif (text_pais_seq1 == "Madagascar"):
             self.selec_especie_seq1.get_model().clear()
-            bd_mada= open('/home/alexandra/Escritorio/Paises_selec/fauna_endemica_Madagascar','r')
+            bd_mada= open('Paises_selec/fauna_endemica_Madagascar','r')
             for item in bd_mada.readlines():
                 self.selec_especie_seq1.append_text(item)
         elif (text_pais_seq1 == "México"): 
             self.selec_especie_seq1.get_model().clear()
-            bd_mex= open('/home/alexandra/Escritorio/Paises_selec/fauna_endemica_Mexico','r')
+            bd_mex= open('Paises_selec/fauna_endemica_Mexico','r')
             for item in bd_mex.readlines():
                 self.selec_especie_seq1.append_text(item)
         elif (text_pais_seq1 == "Srilanka"):
             self.selec_especie_seq1.get_model().clear()
-            bd_sri= open('/home/alexandra/Escritorio/Paises_selec/fauna_endemica_Srilanka','r')
+            bd_sri= open('Paises_selec/fauna_endemica_Srilanka','r')
             for item in bd_sri.readlines():
                 self.selec_especie_seq1.append_text(item)
         elif (text_pais_seq1 == "Tailandia"): 
             self.selec_especie_seq1.get_model().clear()
-            bd_tai= open('/home/alexandra/Escritorio/Paises_selec/fauna_endemica_Tailandia','r')
+            bd_tai= open('Paises_selec/fauna_endemica_Tailandia','r')
             for item in bd_tai.readlines():
                 self.selec_especie_seq1.append_text(item)
         elif (text_pais_seq1 == "Uruguay"):
             self.selec_especie_seq1.get_model().clear()
-            bd_uru= open('/home/alexandra/Escritorio/Paises_selec/fauna_endemica_Uruguay','r')
+            bd_uru= open('Paises_selec/fauna_endemica_Uruguay','r')
             for item in bd_uru.readlines():
                 self.selec_especie_seq1.append_text(item)
 
@@ -224,14 +224,14 @@ class anotherWinAlign(gtk.Window):
         if tipo1 == "Gen":
             if (pais1 =="Argentina"):
                 # bd_argen, guarda la lista de las especies de Argentina 
-                bd_argen= open('/home/alexandra/Escritorio/Paises_selec/fauna_endemica_Argentina','r')
+                bd_argen= open('Paises_selec/fauna_endemica_Argentina','r')
                 for item in bd_argen.readlines():
                     # name guardara el valor que hay en item 
                     name= item
                     # actualiza el valor de item solo que no toma el salto de linea  
                     name = name[:len(name)-1]
                     # archivo es la direccion de los ids de los genes de una especie 
-                    archivo= '/home/alexandra/Escritorio/Argentina'+'/'+name + '/'+ name+'_GENES'
+                    archivo= 'Argentina'+'/'+name + '/'+ name+'_GENES'
                     if( especie1 == item):                     
                         self.store_ids.clear()
                         # bd_argen2 guardara los ids de los genes de una especie 
@@ -242,11 +242,11 @@ class anotherWinAlign(gtk.Window):
                
             elif (pais1 =="Australia"):
                 # archivo= '/home/alexandra/Escritorio/Argentina/'+ item
-                bd_aus= open('/home/alexandra/Escritorio/Paises_selec/fauna_endemica_Australia','r')
+                bd_aus= open('Paises_selec/fauna_endemica_Australia','r')
                 for item in bd_aus.readlines():
                     name= item
                     name = name[:len(name)-1]
-                    archivo= '/home/alexandra/Escritorio/Australia'+'/'+name + '/'+ name+'_GENES'
+                    archivo= 'Australia'+'/'+name + '/'+ name+'_GENES'
                     if( especie1 == item):                     
                         self.store_ids.clear()
                         bd_aus2= open(archivo,'r')
@@ -254,11 +254,11 @@ class anotherWinAlign(gtk.Window):
                             self.store_ids.append ([item2])
         elif tipo1 == "Proteína":
             if (pais1 =="Argentina"):
-                bd_argen= open('/home/alexandra/Escritorio/Paises_selec/fauna_endemica_Argentina','r')
+                bd_argen= open('Paises_selec/fauna_endemica_Argentina','r')
                 for item in bd_argen.readlines():
                     name= item
                     name = name[:len(name)-1]
-                    archivo= '/home/alexandra/Escritorio/Argentina'+'/'+name + '/'+ name+'_PROTEINAS'
+                    archivo= 'Argentina'+'/'+name + '/'+ name+'_PROTEINAS'
                     if( especie1 == item):                     
                         self.store_ids.clear()
                         bd_argen2= open(archivo,'r')
@@ -266,11 +266,11 @@ class anotherWinAlign(gtk.Window):
                             self.store_ids.append ([item2])
                
             elif (pais1 =="Australia"):
-                bd_aus= open('/home/alexandra/Escritorio/Paises_selec/fauna_endemica_Australia','r')
+                bd_aus= open('Paises_selec/fauna_endemica_Australia','r')
                 for item in bd_aus.readlines():
                     name= item
                     name = name[:len(name)-1]
-                    archivo= '/home/alexandra/Escritorio/Australia'+'/'+name + '/'+ name+'_PROTEINAS'
+                    archivo= 'Australia'+'/'+name + '/'+ name+'_PROTEINAS'
                     if( especie1 == item):                     
                         self.store_ids.clear()
                         bd_aus2= open(archivo,'r')
