@@ -2,11 +2,11 @@
 
 **Integrantes:**
 
-- Cynthia Calixtro
-- Alexandra Ramirez
-- Melissa Nuñez
-- Franco Topal
+- Cynthia Calixtro Ames
+- Alexandra Ramirez Flores
+- Melissa Nuñez Talla
+- Franco Najarro Mallqui
 
-Ejecutar:
+**Ejecutar:**
 
 `python2 bio_pruebas.py` 
