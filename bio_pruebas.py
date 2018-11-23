@@ -17,18 +17,17 @@ class anotherWinAlign(gtk.Window):
         super(anotherWinAlign,self).__init__()
         # llamando al evento on_destroy 
         self.connect("destroy",self.on_destroy)
-        self.set_default_size(960,960)   # x,y
+        self.set_default_size(960,960)   # size en formato x,y
         # titulo de la ventana 
         self.set_title("Alineamiento Simple")
         
-        # modificar el tamano de screen 
-        screen = gtk.Fixed()
-        
+
         #####################################
         #    Elegir el tipo de secuencia    #
         #####################################
         tipo = gtk.Label()
         tipo.set_markup("<b>Selecciona el tipo de secuencia:</b>")
+        
         #ComoboxTex para elegir el tipo de  secuencia
         self.tipo_combobox = gtk.combo_box_new_text()
          # llamando al evento on_changed_tipo 
@@ -41,9 +40,11 @@ class anotherWinAlign(gtk.Window):
         ############################
         seq1 = gtk.Label() 
         seq1.set_markup("<b>Selecciona la primera secuencia:</b>")
-        ########## PAISES
+        
+        ########## PAIS
         pais_seq1 = gtk.Label()
-        pais_seq1.set_markup("<b>País</b>")
+        pais_seq1.set_markup("<b>País:</b>")
+        
         # ComoboxTex para elegir el pais
         self.selec_pais_seq1 = gtk.combo_box_new_text() 
         self.selec_pais_seq1.connect("changed",self.on_changed_pais_seq1) 
@@ -63,9 +64,10 @@ class anotherWinAlign(gtk.Window):
         self.selec_pais_seq1.append_text("Tailandia")
         self.selec_pais_seq1.append_text("Uruguay")
 
-        ########## ESPECIES
+        ########## ESPECIE
         especie_seq1 = gtk.Label()
-        especie_seq1.set_markup("<b>Especie</b>")
+        especie_seq1.set_markup("<b>Especie:</b>")
+        
         # ComoboxTex para elegir la especie
         self.selec_especie_seq1 = gtk.combo_box_new_text()
         self.selec_especie_seq1.connect("changed",self.on_changed_especie_seq1) 
@@ -74,60 +76,204 @@ class anotherWinAlign(gtk.Window):
         
         ########## IDs DE LAS SECUENCIAS
         ids_seq1 = gtk.Label()
-        ids_seq1.set_markup("<b>Selecciona un id:</b>")
-        #treeView para elegir el ID
-        # se muestra una lista 
+        ids_seq1.set_markup("<b>Selecciona un id haciendo doble click sobre él:</b>")
+        
+        # treeView para elegir el ID 
         treeView = gtk.TreeView()
         treeView.connect("row-activated", self.on_activated_seq1)
+        
         # Items de los IDs (IDs disponibles, inicialmente vacio)
         self.store_ids = gtk.ListStore(str)
         self.store_ids.append(["----------------------"])
         treeView.set_model(self.store_ids)
-        # Columnas 
+        
+        # Columna
         rendererText = gtk.CellRendererText()
-        rendererText.set_property('editable',True)
-        rendererText.set_property('cell-background','#819FF7')
+        #rendererText.set_property('editable',True)
+        #rendererText.set_property('cell-background','#819FF7')
         column = gtk.TreeViewColumn("Secuencias\nDisponibles", rendererText, text=0)
+        
+        # Agregando la columna al treeView
         treeView.append_column(column)
         treeView.set_headers_visible(False)
         treeView.set_enable_search(True)
-        #scrolledwindow = gtk.ScrolledWindow()
-        #scrolledwindow.set_policy(gtk.POLICY_AUTOMATIC, gtk.POLICY_AUTOMATIC)
-        #scrolledwindow.add_with_viewport(treeView)
-        
-        
+
+        # ScrolledWindow
+        scrolled_window = gtk.ScrolledWindow()
+        scrolled_window.add(treeView)
+    
 
         ############################
         #        Secuencia2        #
         ############################
-        seq2 = gtk.Label("Selecciona la segunda secuencia: ")
+        seq2 = gtk.Label()
+        seq2.set_markup("<b>Selecciona la segunda secuencia:</b>")
+
+        ########## PAIS
+        pais_seq2 = gtk.Label()
+        pais_seq2.set_markup("<b>País:</b>")
+
+        # ComoboxTex para elegir el pais
+        self.selec_pais_seq2 = gtk.combo_box_new_text()
+        #self.selec_pais_seq2.connect("changed",self.on_changed_pais_seq1)
+        # Items del combobox (paises disponibles)
+        self.selec_pais_seq2.append_text("USA")
+        self.selec_pais_seq2.append_text("Nueva Zelanda")
+        self.selec_pais_seq2.append_text("Brasil")
+
+        ########## ESPECIE
+        especie_seq2 = gtk.Label()
+        especie_seq2.set_markup("<b>Especie:</b>")
+
+        # ComoboxTex para elegir la especie
+        self.selec_especie_seq2 = gtk.combo_box_new_text()
+        #self.selec_especie_seq2.connect("changed",self.on_changed_especie_seq2)
+        # Items del combobox (especies disponibles, inicialmente vacio)
+        self.selec_especie_seq2.append_text("------")
+
+        ########## IDs DE LAS SECUENCIAS
+        ids_seq2 = gtk.Label()
+        ids_seq2.set_markup("<b>Selecciona un id haciendo doble click sobre él:</b>")
+
+        # treeView para elegir el ID
+        treeView_seq2 = gtk.TreeView()
+        #treeView_seq2.connect("row-activated", self.on_activated_seq2)
+
+        # Items de los IDs (IDs disponibles, inicialmente vacio)
+        self.store_ids_seq2 = gtk.ListStore(str)
+        self.store_ids_seq2.append(["----------------------"])
+        treeView_seq2.set_model(self.store_ids_seq2)
+
+        # Columna
+        rendererText_seq2 = gtk.CellRendererText()
+        #rendererText_seq2.set_property('editable',True)
+        #rendererText_seq2.set_property('cell-background','#819FF7')
+        column_seq2 = gtk.TreeViewColumn("Secuencias\nDisponibles", rendererText_seq2, text=0)
+
+        # Agregando la columna al treeView
+        treeView_seq2.append_column(column_seq2)
+        treeView_seq2.set_headers_visible(False)
+        treeView_seq2.set_enable_search(True)
+
+        # ScrolledWindow
+        scrolled_window_seq2 = gtk.ScrolledWindow()
+        scrolled_window_seq2.add(treeView_seq2)
+
+        #############################
+        #  Align: tipo y parametros #
+        #############################
+
+        mensaje_tipo = gtk.Label("Selecciona el tipo de alineamiento: ")
+        self.combobox_align_type = gtk.combo_box_new_text()
+        self.combobox_align_type.append_text("Local")
+        self.combobox_align_type.append_text("Global")
+
+
+        #####################################################
+        #     VBox para la primera parte de la ventana      #
+        #####################################################
+
+        # Hbox para seleccionar el tipo de secuencia
+        # contiene el mensaje de "selecciona el tipo...."
+        # y el combobox del tipo de secuencia
+        box_tipo_seq = gtk.HBox()
+        box_tipo_seq.pack_start(tipo,expand=False, fill=False, padding =30) # mensaje de "seleccionar..."
+        box_tipo_seq.pack_start(self.tipo_combobox,expand=False, fill=False) # combobox del tipo de secuencia
+
+        # Hbox para el mensaje de "selecciona la primera secuencia"
+        box_mensaje_seleccion_seq1 = gtk.HBox()
+        box_mensaje_seleccion_seq1.pack_start(seq1, expand=False, fill=False, padding =30)
+
+        # Hbox para el mensaje "pais" y el combobox del pais de la seq1
+        box_pais_seq1 = gtk.HBox()
+        box_pais_seq1.pack_start(pais_seq1,expand=False, fill=False,padding =30)
+        box_pais_seq1.pack_start(self.selec_pais_seq1,expand=False,fill=False)
+
+        # Hbox para el mensaje "especie" y el combobox de la especie de la seq1
+        box_especie_seq1 = gtk.HBox()
+        box_especie_seq1.pack_start(especie_seq1,expand=False, fill=False,padding =30)
+        box_especie_seq1.pack_start(self.selec_especie_seq1,expand=False, fill=False)
+
+        # Hbox para el pais y especie de la seq1
+        box_pais_especie_seq1 = gtk.HBox()
+        box_pais_especie_seq1.pack_start(box_pais_seq1,expand=False, fill=False)
+        box_pais_especie_seq1.pack_start(box_especie_seq1,expand=False, fill=False, padding = 150)
+
+        # Hbox para el mensaje "Selecciona un id"
+        box_mensaje_seleccion_id = gtk.HBox()
+        box_mensaje_seleccion_id.pack_start(ids_seq1,expand=False, fill=False, padding =30)
+
+        # Hbox para la lista de IDs
+        box_id_list = gtk.HBox()
+        box_id_list.pack_start(scrolled_window, padding =30)
+
+        box_parte1 = gtk.VBox()
+        box_parte1.pack_start(box_tipo_seq,expand=False, fill=False, padding =30)
+        box_parte1.pack_start(box_mensaje_seleccion_seq1, expand=False, fill=False)
+        box_parte1.pack_start(box_pais_especie_seq1,expand=False, fill=False, padding =20)
+        box_parte1.pack_start(box_mensaje_seleccion_id,expand=False, fill=False)
+        box_parte1.pack_start(box_id_list,padding=10)
+
+
+        #####################################################
+        #     VBox para la segunda parte de la ventana      #
+        #####################################################
+        # Hbox para el mensaje de "selecciona la segunda secuencia"        
+        box_mensaje_seleccion_seq2 = gtk.HBox()
+        box_mensaje_seleccion_seq2.pack_start(seq2, expand=False, fill=False, padding =30)
+
+        # Hbox para el mensaje "pais" y el combobox del pais de la seq2
+        box_pais_seq2 = gtk.HBox()
+        box_pais_seq2.pack_start(pais_seq2,expand=False, fill=False,padding =30)
+        box_pais_seq2.pack_start(self.selec_pais_seq2,expand=False,fill=False)
+
+        # Hbox para el mensaje "especie" y el combobox de la especie de la seq1
+        box_especie_seq2 = gtk.HBox()
+        box_especie_seq2.pack_start(especie_seq2,expand=False, fill=False,padding =30)
+        box_especie_seq2.pack_start(self.selec_especie_seq2,expand=False, fill=False)
+
+        # Hbox para el pais y especie de la seq1
+        box_pais_especie_seq2 = gtk.HBox()
+        box_pais_especie_seq2.pack_start(box_pais_seq2,expand=False, fill=False)
+        box_pais_especie_seq2.pack_start(box_especie_seq2,expand=False, fill=False, padding = 150)
+
+        # Hbox para el mensaje "Selecciona un id"
+        box_mensaje_seleccion_id_seq2 = gtk.HBox()
+        box_mensaje_seleccion_id_seq2.pack_start(ids_seq2,expand=False, fill=False, padding =30)
+
+        # Hbox para la lista de IDs
+        box_id_list_seq2 = gtk.HBox()
+        box_id_list_seq2.pack_start(scrolled_window_seq2, padding =30)
+
+        box_parte2 = gtk.VBox()
+        box_parte2.pack_start(box_mensaje_seleccion_seq2, expand=False, fill=False)
+        box_parte2.pack_start(box_pais_especie_seq2,expand=False, fill=False, padding =20)
+        box_parte2.pack_start(box_mensaje_seleccion_id_seq2,expand=False, fill=False)
+        box_parte2.pack_start(box_id_list_seq2,padding=10)
+
+        #####################################################
+        #     VBox para la tercera parte de la ventana      #
+        #####################################################
+        box_tipo_align = gtk.HBox()
+        box_tipo_align.pack_start(mensaje_tipo,expand=False, fill=False,padding =30)
+        box_tipo_align.pack_start(self.combobox_align_type,expand=False, fill=False)
+
+        box_parte3 = gtk.VBox()
+        box_parte3.pack_start(box_tipo_align,expand=False, fill=False)
+
+        #####################################################
+        #            VBox principal de la ventana           #
+        #####################################################
+        box_main = gtk.VBox(spacing=10)
+        box_main.pack_start(box_parte1)
+        box_main.pack_start(box_parte2)
+        box_main.pack_start(box_parte3)
+        self.add(box_main)
+
         
-        
-        ############################
-        #        screen.put        #
-        ############################
-        # tipo de secuencia
-        screen.put(tipo,50,25)
-        screen.put(self.tipo_combobox,280,20) # ComboboxText
-        
-        # secuencia 1
-        screen.put(seq1,50,85) # mensaje secuencia1
-        # secuencia 1: pais
-        screen.put(pais_seq1,50,120) # mensaje pais
-        screen.put(self.selec_pais_seq1,90,110) # ComboboxText pais
-        # secuencia 1: especie
-        screen.put(especie_seq1,300,120) # mensaje especie
-        screen.put(self.selec_especie_seq1,370,110) # ComboboxText especie
-        # secuencia 1: IDs 
-        screen.put(ids_seq1, 50,170) # mensaje IDs
-        screen.put(treeView, 50,200) # treeView IDs
-        # secuencia 2
-        #screen.put(seq2,50,450) # mensaje secuencia2
-        
-        ############################
-        #          Ventana         #
-        ############################                   
-        self.add(screen)
+        #######################################
+        #   Mostrar elementos de la ventana   #
+        #######################################                   
         self.show_all()
         
 
@@ -330,79 +476,133 @@ class PyApp(gtk.Window):
     def __init__(self):
         # creando la ventana
         super(PyApp,self).__init__()
-        self.set_default_size(320,240)
+        self.set_default_size(320,330)
         self.set_title("My Biology App")
         self.set_position(gtk.WIN_POS_CENTER)
-        # Primer boton
+        self.set_resizable(False)
+
+        ########## Primer boton
         align = gtk.Button("Alineamiento Simple")
-        #crear a gdk.color para el color del boton  
-        map = align.get_colormap() 
+
+        #crear a gdk.color para el color del boton 
+        map = align.get_colormap()   
         color = map.alloc_color("#81F79F") 
+        
         #copiar el estilo actual y reemplazarlo 
         style = align.get_style().copy()
         style.bg[gtk.STATE_NORMAL] = color 
+        
         #cambiar el estilo del boton por el estilo escogido  
         align.set_style(style)         
 
         align.connect("clicked",self.align_Event)
         align.set_size_request(200,40)
         
-        # Segundo boton
+
+        ########## Segundo boton
         alignM = gtk.Button("Alineamiento Múltiple")
+        
         #crear a gdk.color para el color del boton  
         map = alignM.get_colormap() 
         color = map.alloc_color("#9F81F7") 
+        
         #copiar el estilo actual y reemplazarlo 
         style = alignM.get_style().copy()
         style.bg[gtk.STATE_NORMAL] = color 
+        
         #cambiar el estilo del boton por el estilo escogido  
         alignM.set_style(style)  
-        alignM.connect("button_press_event",self.alignM_Event)
+        
+        alignM.connect("clicked",self.alignM_Event)
         alignM.set_size_request(200,40)
 
-        # Tercer Boton
+
+        ########## Tercer Boton
         tree = gtk.Button("Árbol Filogenético")
+        
         #crear a gdk.color para el color del boton  
         map = tree.get_colormap() 
         color = map.alloc_color("#FA8258") 
+        
         #copiar el estilo actual y reemplazarlo 
         style = tree.get_style().copy()
         style.bg[gtk.STATE_NORMAL] = color 
+        
         #cambiar el estilo del boton por el estilo escogido  
         tree.set_style(style)  
-        tree.connect("button_press_event",self.tree_Event)
+        
+        tree.connect("clicked",self.tree_Event)
         tree.set_size_request(200,40)
         
-        screen = gtk.Fixed()
-        
+        ########## Boton de About
+        about = gtk.Button("Acerca de")
+        about.connect("clicked",self.showAbout)
+        about.set_size_request(85,25)
+
+        ########## Mensaje de Bienvenida
         message = gtk.Label()
         message.set_markup("<b><big>¡Bienvenido a My Biology App!</big></b>")
-        screen.put(message,25,25)
         
+        ########## Mensaje que pide seleccionar una opcion
         message2= gtk.Label()
         message2.set_markup("<b>Selecciona una opción:</b>")
-        screen.put(message2,25,70)
         
-        screen.put(align,65,100)
-        screen.put(alignM,65,140)
-        screen.put(tree,65,180)
-        
-        self.add(screen)
+        # HBox del mensaje de bienvenida
+        box_message = gtk.HBox()
+        box_message.pack_start(message,expand=False, fill=False,padding=20)
 
+        # HBox del mensaje para seleccionar una opcion
+        box_message2 = gtk.HBox()
+        box_message2.pack_start(message2,expand=False, fill=False,padding=20)
+        
+        # HBox para el primer boton
+        box_align = gtk.HBox()
+        box_align.pack_start(align,padding = 70)
+
+        # HBox para el segundo boton
+        box_alignM = gtk.HBox()
+        box_alignM.pack_start(alignM,padding = 70)
+
+        # HBox para el tercer boton
+        box_tree = gtk.HBox()
+        box_tree.pack_start(tree,padding = 70)
+
+        # HBox para el boton de about
+        box_about = gtk.HBox()
+        box_about.pack_start(about,expand=False, fill=False,padding=20)
+
+        box_main = gtk.VBox()
+        box_main.pack_start(box_message,padding = 20)
+        box_main.pack_start(box_message2,padding = 20)
+        box_main.pack_start(box_align)
+        box_main.pack_start(box_alignM)
+        box_main.pack_start(box_tree)
+        box_main.pack_start(box_about, padding = 20)
+
+        self.add(box_main)
 
     def align_Event(self,win):
         print("Alineamiento Simple!!")
         align_Win = anotherWinAlign()
         
-    def alignM_Event(self,widget,event):
+    def alignM_Event(self,win):
         print("Alineamiento Múltiple!!")
         alignM_Win = anotherWinAlignM()
 
     
-    def tree_Event(self,widget,event):
+    def tree_Event(self,win):
         print("Árbol Filogenético!!")
         tree_Win = anotherWinTree()
 
+
+    def showAbout(self,win):
+        about = gtk.AboutDialog()
+        about.set_program_name("My Biology App")
+        about.set_authors(["Chia", "Ale", "Melissa", "Hazard"])
+        about.set_copyright("(c) computer science students")
+        about.set_comments("Course: Biología Computacional")
+        about.run()
+        about.destroy()
 
 window = PyApp()
 window.connect("destroy",gtk.main_quit)
