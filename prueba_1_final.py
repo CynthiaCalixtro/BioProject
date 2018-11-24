@@ -340,9 +340,9 @@ class anotherWinAlign(gtk.Window):
         tipo_align= self.combobox_align_type.get_active_text()
         #print(tipo_align)
         if (tipo_align == "Local"):
-            print(tipo_align)   # pasar el codigo alinear local con el id para recibir un fasta 
+            print(tipo_align)
         elif (tipo_align == "Global"): 
-            print(tipo_align)   # pasar el codigo alinear global con el id para recibir un fasta 
+            print(tipo_align)
         
         
 
