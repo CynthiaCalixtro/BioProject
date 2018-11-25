@@ -1033,11 +1033,12 @@ class anotherWinAlign(gtk.Window):
         current_id2 = model[row][0]
         # numId=current_id
         print(current_id2)       
-            
+    
+
 
 # Ventana Alineamiento Multiple
 class anotherWinAlignM(gtk.Window):
-    def __init__(self):   
+    def __init__(self):
         ############################
         #          Ventana         #
         ############################        
@@ -1045,7 +1046,24 @@ class anotherWinAlignM(gtk.Window):
         self.connect("destroy",self.on_destroy)
         self.set_default_size(960,960)
         self.set_title("Alineamiento Múltiple")
+        self.add(gtk.Label("This is another window"))
+        self.show_all()
 
+    def on_destroy(self,widget):
+        widget.hide()
+
+
+
+# Ventana Arbol Filogenetico
+class anotherWinTree(gtk.Window):
+    def __init__(self):   
+        ############################
+        #          Ventana         #
+        ############################        
+        super(anotherWinTree,self).__init__()
+        self.connect("destroy",self.on_destroy)
+        self.set_default_size(960,960)
+        self.set_title("Árbol Filogenético")
         ############################
         #     Eleccion del gen     #
         ############################
@@ -1058,7 +1076,6 @@ class anotherWinAlignM(gtk.Window):
         # Items del combobox (especies disponibles, inicialmente vacio)
         self.selec_gen.append_text("------")        
         
-
 
         ##################################################
         #   TreeView para seleccionar uno o mas paises   #
@@ -1125,21 +1142,6 @@ class anotherWinAlignM(gtk.Window):
         model[path][1] = not model[path][1]
         print("toogle '%s' to: %s" % (model[path][0], model[path][1]),)
         
-# Ventana Arbol Filogenetico
-class anotherWinTree(gtk.Window):
-    def __init__(self):   
-        ############################
-        #          Ventana         #
-        ############################        
-        super(anotherWinTree,self).__init__()
-        self.connect("destroy",self.on_destroy)
-        self.set_default_size(960,960)
-        self.set_title("Árbol Filogenético")
-        self.add(gtk.Label("This is another window"))
-        self.show_all()
-        
-    def on_destroy(self,widget):
-        widget.hide()
         
 class PyApp(gtk.Window):
     def __init__(self):
