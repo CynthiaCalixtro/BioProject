@@ -1064,6 +1064,8 @@ class anotherWinTree(gtk.Window):
         self.connect("destroy",self.on_destroy)
         self.set_default_size(960,960)
         self.set_title("Árbol Filogenético")
+
+
         ############################
         #     Eleccion del gen     #
         ############################
@@ -1108,6 +1110,17 @@ class anotherWinTree(gtk.Window):
         scrolled_window_gene = gtk.ScrolledWindow()
         scrolled_window_gene.add(treeView_gene)
 
+
+        ###################################
+        #   Boton para generar el arbol   #
+        ###################################
+        self.generar_arbol = gtk.Button("Generar Árbol")
+        self.generar_arbol.connect("clicked",self.ver_arbol)
+
+
+        ########################
+        #   Boxes terciarios   #
+        ########################
         # HBox para el mensaje de seleccion del gen
         box_mensaje_gen = gtk.HBox()
         box_mensaje_gen.pack_start(name_gene,expand=False, fill=False,padding = 30)
@@ -1117,16 +1130,32 @@ class anotherWinTree(gtk.Window):
         box_gene_list = gtk.HBox()
         box_gene_list.pack_start(scrolled_window_gene, padding =30)
 
+        #HBox para mostrar boton para mostrar arbol
+        box_ver_arbol = gtk.HBox()
+        box_ver_arbol.pack_start(self.generar_arbol,expand=False, fill=False, padding = 30)
 
+        # HBox para mostrar el arbol generado
+        self.box_tree_show = gtk.HBox()
+        self.arbol = 0
+
+        #########################
+        #   Boxes secundarios   #
+        #########################
         # partes boxes
         box_parte1_gene = gtk.VBox()
-        box_parte1_gene.pack_start(box_mensaje_gen,expand=False, fill=False, padding = 30)
+        box_parte1_gene.pack_start(box_mensaje_gen,expand=False, fill=False, padding = 20)
 
         box_parte2_gene = gtk.VBox()
         box_parte2_gene.pack_start(box_gene_list)        
 
         box_parte3_gene = gtk.VBox()
-        
+        box_parte3_gene.pack_start(box_ver_arbol,expand=False, fill=False,padding=10)
+        box_parte3_gene.pack_start(self.box_tree_show,expand=False, fill=False,padding=10)
+
+
+        ########################
+        #     Box Principal    #
+        ########################
         box_main_gene = gtk.VBox()
         box_main_gene.pack_start(box_parte1_gene, expand=False, fill=False)
         box_main_gene.pack_start(box_parte2_gene)
@@ -1142,7 +1171,17 @@ class anotherWinTree(gtk.Window):
         model[path][1] = not model[path][1]
         print("toogle '%s' to: %s" % (model[path][0], model[path][1]),)
         
-        
+    def ver_arbol(self,win):
+        print("Mostrar arbol!!!")
+        if self.arbol == 0:
+            # Imagen del arbol   
+            self.tree_image = gtk.Image()
+            self.tree_image.set_from_file("treesample.png")
+            self.box_tree_show.pack_start(self.tree_image,expand=False, fill=False, padding = 30)
+            self.arbol = 1
+            self.show_all()
+
+
 class PyApp(gtk.Window):
     def __init__(self):
         # creando la ventana
