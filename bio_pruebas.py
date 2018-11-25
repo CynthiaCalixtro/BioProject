@@ -1045,7 +1045,53 @@ class anotherWinAlignM(gtk.Window):
         self.connect("destroy",self.on_destroy)
         self.set_default_size(960,960)
         self.set_title("Alineamiento Múltiple")
-        self.add(gtk.Label("This is another window"))
+
+        name_gene = gtk.Label()
+        name_gene.set_markup("<b>Selecciona un gen:</b>")
+        
+        # treeView para elegir el gen
+        treeView_gene = gtk.TreeView()
+        #treeView_gene.connect("row-activated", self.on_activated_gene)
+
+        # Items de los IDs (IDs disponibles, inicialmente vacio)
+        self.store_gene = gtk.ListStore(str)
+        self.store_gene.append(["----------------------"])
+        treeView_gene.set_model(self.store_gene)
+
+        # Columna
+        rendererText_gene = gtk.CellRendererText()
+        #rendererText.set_property('editable',True)
+        #rendererText.set_property('cell-background','#819FF7')
+        column_gene = gtk.TreeViewColumn("Genes\nDisponibles", rendererText_gene, text=0)
+
+        # Agregando la columna al treeView
+        treeView_gene.append_column(column_gene)
+        treeView_gene.set_headers_visible(False)
+        treeView_gene.set_enable_search(True)
+
+        # ScrolledWindow
+        scrolled_window_gene = gtk.ScrolledWindow()
+        scrolled_window_gene.add(treeView_gene)
+
+        # HBox para el mensaje de seleccion del gen
+        box_mensaje_gen = gtk.HBox()
+        box_mensaje_gen.pack_start(name_gene,expand=False, fill=False,padding = 30)
+
+        # Hbox para la lista de genes
+        box_gene_list = gtk.HBox()
+        box_gene_list.pack_start(scrolled_window_gene, padding =30)
+
+        box_parte1_gene = gtk.VBox()
+        box_parte1_gene.pack_start(box_mensaje_gen,expand=False, fill=False, padding = 30)
+        box_parte1_gene.pack_start(box_gene_list)
+
+        box_parte2_gene = gtk.VBox()
+
+        box_main_gene = gtk.VBox()
+        box_main_gene.pack_start(box_parte1_gene)
+        box_main_gene.pack_start(box_parte2_gene)
+
+        self.add(box_main_gene)
         self.show_all()
         
     def on_destroy(self,widget):
