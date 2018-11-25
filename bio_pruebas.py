@@ -1046,8 +1046,23 @@ class anotherWinAlignM(gtk.Window):
         self.connect("destroy",self.on_destroy)
         self.set_default_size(960,960)
         self.set_title("Alineamiento Múltiple")
-        self.add(gtk.Label("This is another window"))
+        
+        #########################################
+        #     Eleccion del tipo de secuencia     #
+        #########################################
+        self.tipo_seq_label = gtk.Label()
+        self.tipo_seq_label.set_markup("<b>Selecciona un tipo de secuancia:</b>")
+
+
+        ########################
+        #     Box Principal    #
+        ########################
+        self.box_main_alignM = gtk.VBox()
+        self.box_main_alignM.pack_start(self.tipo_seq_label)
+
+        self.add(self.box_main_alignM)
         self.show_all()
+
 
     def on_destroy(self,widget):
         widget.hide()
