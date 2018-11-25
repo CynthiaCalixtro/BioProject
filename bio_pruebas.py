@@ -1141,13 +1141,15 @@ class anotherWinTree(gtk.Window):
         #########################
         #   Boxes secundarios   #
         #########################
-        # partes boxes
+        # VBox para el mensaje y combobox para seleccionar el gen
         box_parte1_gene = gtk.VBox()
         box_parte1_gene.pack_start(box_mensaje_gen,expand=False, fill=False, padding = 20)
 
+        # VBox para ver el treeView
         box_parte2_gene = gtk.VBox()
         box_parte2_gene.pack_start(box_gene_list)        
 
+        # VBox para el boton de generar arbol
         box_parte3_gene = gtk.VBox()
         box_parte3_gene.pack_start(box_ver_arbol,expand=False, fill=False,padding=10)
         box_parte3_gene.pack_start(self.box_tree_show,expand=False, fill=False,padding=10)
@@ -1159,7 +1161,7 @@ class anotherWinTree(gtk.Window):
         box_main_gene = gtk.VBox()
         box_main_gene.pack_start(box_parte1_gene, expand=False, fill=False)
         box_main_gene.pack_start(box_parte2_gene)
-        box_main_gene.pack_start(box_parte3_gene)
+        box_main_gene.pack_start(box_parte3_gene, expand=False, fill=False)
 
         self.add(box_main_gene)
         self.show_all()
