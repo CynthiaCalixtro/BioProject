@@ -1046,28 +1046,46 @@ class anotherWinAlignM(gtk.Window):
         self.set_default_size(960,960)
         self.set_title("Alineamiento Múltiple")
 
+        ############################
+        #     Eleccion del gen     #
+        ############################
         name_gene = gtk.Label()
         name_gene.set_markup("<b>Selecciona un gen:</b>")
         
-        # treeView para elegir el gen
+        # ComoboxTex para elegir el gen
+        self.selec_gen = gtk.combo_box_new_text()
+        #self.selec_gen.connect("changed",self.on_changed_selec_gen)
+        # Items del combobox (especies disponibles, inicialmente vacio)
+        self.selec_gen.append_text("------")        
+        
+
+
+        ##################################################
+        #   TreeView para seleccionar uno o mas paises   #
+        ##################################################   
+        # treeView para elegir los paises
         treeView_gene = gtk.TreeView()
         #treeView_gene.connect("row-activated", self.on_activated_gene)
 
         # Items de los IDs (IDs disponibles, inicialmente vacio)
-        self.store_gene = gtk.ListStore(str)
-        self.store_gene.append(["----------------------"])
+        self.store_gene = gtk.ListStore(str,bool)
+        self.store_gene.append(["----------------------",False])
         treeView_gene.set_model(self.store_gene)
+        treeView_gene.set_enable_search(True)
 
-        # Columna
+        # Columna 1
         rendererText_gene = gtk.CellRendererText()
-        #rendererText.set_property('editable',True)
-        #rendererText.set_property('cell-background','#819FF7')
-        column_gene = gtk.TreeViewColumn("Genes\nDisponibles", rendererText_gene, text=0)
-
+        column_gene = gtk.TreeViewColumn("Países\nDisponibles", rendererText_gene, text=0) 
         # Agregando la columna al treeView
         treeView_gene.append_column(column_gene)
-        treeView_gene.set_headers_visible(False)
-        treeView_gene.set_enable_search(True)
+
+        # Columna 2
+        rendererText_gene2 = gtk.CellRendererToggle()
+        rendererText_gene2.set_property('activatable',True)
+        rendererText_gene2.connect('toggled', self.cell_toggled,self.store_gene)
+        column_gene2 = gtk.TreeViewColumn("Selecciona", rendererText_gene2,active=1)
+        # Agregando la columna al treeView
+        treeView_gene.append_column(column_gene2)
 
         # ScrolledWindow
         scrolled_window_gene = gtk.ScrolledWindow()
@@ -1076,26 +1094,36 @@ class anotherWinAlignM(gtk.Window):
         # HBox para el mensaje de seleccion del gen
         box_mensaje_gen = gtk.HBox()
         box_mensaje_gen.pack_start(name_gene,expand=False, fill=False,padding = 30)
+        box_mensaje_gen.pack_start(self.selec_gen,expand=False, fill=False)
 
         # Hbox para la lista de genes
         box_gene_list = gtk.HBox()
         box_gene_list.pack_start(scrolled_window_gene, padding =30)
 
+
+        # partes boxes
         box_parte1_gene = gtk.VBox()
         box_parte1_gene.pack_start(box_mensaje_gen,expand=False, fill=False, padding = 30)
-        box_parte1_gene.pack_start(box_gene_list)
 
         box_parte2_gene = gtk.VBox()
+        box_parte2_gene.pack_start(box_gene_list)        
 
+        box_parte3_gene = gtk.VBox()
+        
         box_main_gene = gtk.VBox()
-        box_main_gene.pack_start(box_parte1_gene)
+        box_main_gene.pack_start(box_parte1_gene, expand=False, fill=False)
         box_main_gene.pack_start(box_parte2_gene)
+        box_main_gene.pack_start(box_parte3_gene)
 
         self.add(box_main_gene)
         self.show_all()
         
     def on_destroy(self,widget):
         widget.hide()
+
+    def cell_toggled(self,cell,path,model):
+        model[path][1] = not model[path][1]
+        print("toogle '%s' to: %s" % (model[path][0], model[path][1]),)
         
 # Ventana Arbol Filogenetico
 class anotherWinTree(gtk.Window):
