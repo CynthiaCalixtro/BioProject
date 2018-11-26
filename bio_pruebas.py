@@ -1047,26 +1047,299 @@ class anotherWinAlignM(gtk.Window):
         self.set_default_size(960,960)
         self.set_title("Alineamiento Múltiple")
         
+        # haciendo la ventana scrolable
+        self.scrolled_window_main = gtk.ScrolledWindow()
+
         #########################################
-        #     Eleccion del tipo de secuencia     #
+        #     Eleccion del tipo de secuencia    #
         #########################################
         self.tipo_seq_label = gtk.Label()
-        self.tipo_seq_label.set_markup("<b>Selecciona un tipo de secuancia:</b>")
+        self.tipo_seq_label.set_markup("<b>Selecciona un tipo de secuencia:</b>")
 
+        # ComoboxTex para elegir el tipo de secuencia
+        self.selec_tipo_seq = gtk.combo_box_new_text()
+        #self.selec_gen.connect("changed",self.on_changed_selec_gen)
+        # Items del combobox (especies disponibles, inicialmente vacio)
+        self.selec_tipo_seq.append_text("Gen")
+        self.selec_tipo_seq.append_text("Proteína")
+
+        ##################################
+        #             Listas             #
+        ##################################
+        ########## Mensajes para la secuencias 
+        # mensaje de seleccion de la secuencia
+        self.mensaje_seleccion_seq = []
+        # mensaje de selecion del pais
+        self.seleccion_pais_label = []
+        # mensaje de seleccion de la especie
+        self.seleccion_especie_label = []
+        # mensaje de seleccion de ids
+        self.seleccion_ids_label = []
+
+        self.seleccion_pais = []
+        self.seleccion_especie = []
+        self.treeview = []
+        self.store_ids = []
+        self.column = []
+        self.scrolled_window = []
+
+
+        for i in range(2):
+            # mensaje de seleccion de la secuencia
+            self.mensaje_seleccion_seq.append(gtk.Label())
+            self.mensaje_seleccion_seq[i].set_markup("<b>Selecciona la secuencia: </b>")
+
+            ########## PAISES
+            # mensaje de selecion del pais
+            self.seleccion_pais_label.append(gtk.Label("País:"))
+            # ComoboxTex para elegir el pais
+            self.seleccion_pais.append(gtk.combo_box_new_text())
+            #self.seleccion_pais.append[i].connect("changed",self.on_changed_pais)
+            # Items del combobox (paises disponibles)
+            self.seleccion_pais[i].append_text("Argentina")
+            self.seleccion_pais[i].append_text("Australia")
+            self.seleccion_pais[i].append_text("Brasil")
+
+            ########## ESPECIES
+            # mensaje de seleccion de la especie
+            self.seleccion_especie_label.append(gtk.Label("Especie:"))
+            # ComoboxTex para elegir la especie
+            self.seleccion_especie.append(gtk.combo_box_new_text())
+            #self.seleccion_especie[i].connect("changed",self.on_changed_especie)
+            # Items del combobox (especies disponibles, inicialmente vacio)
+            self.seleccion_especie[i].append_text("------")
+
+            ########## TREEVIEW PARA LOS IDS
+            # mensaje de seleccion de ids
+            self.seleccion_ids_label.append(gtk.Label("Selecciona un id haciendo doble click sobre él:"))
+            # treeView para elegir el ID
+            self.treeview.append(gtk.TreeView())
+            #self.treeview[i].connect("row-activated", self.on_activated)
+
+            ########## STORE DE LOS IDS
+            # Items de los IDs (IDs disponibles, inicialmente vacio)
+            self.store_ids.append(gtk.ListStore(str))
+            self.store_ids[i].append(["----------------------"])
+            self.treeview[i].set_model(self.store_ids[i])
+
+            ########## COLUMNA DEL TREEVIEW
+            #self.rendererText = gtk.CellRendererText()
+            self.column.append(gtk.TreeViewColumn("Secuencias\nDisponibles", gtk.CellRendererText(), text=0))
+            # Agregando la columna al treeView
+            self.treeview[i].append_column(self.column[i])
+            self.treeview[i].set_headers_visible(False)
+            self.treeview[i].set_enable_search(True)
+
+            ########## SCROLLED WINDOW
+            self.scrolled_window.append(gtk.ScrolledWindow())
+            self.scrolled_window[i].add(self.treeview[i])
+
+        #############################
+        #  Align: tipo y parametros #
+        #############################
+        # boton para agregar otra secuencia
+        self.agregar_button = gtk.Button("Agregar una secuencia")
+        self.agregar_button.connect("clicked",self.alignM_Button)
+
+        # mensaje para seleccionar el tipo de alineamiento
+        self.mensaje_aling_type = gtk.Label()
+        self.mensaje_aling_type.set_markup("<b>Selecciona el tipo de alineamiento:</b>")
+
+        self.combobox_align_type = gtk.combo_box_new_text()
+        self.combobox_align_type.append_text("Local")
+        self.combobox_align_type.append_text("Global")
+
+        # boton para alinear
+        self.mensaje_align_butoon = gtk.Label()
+        self.mensaje_align_butoon.set_markup("<b>Presiona para alinear:</b>")
+        self.align_button = gtk.Button("Alinear")
+
+        ###########################
+        #    Boxes Individuales   #
+        ###########################
+        # mensaje de seleccion del tipo de secuencia
+        self.hbox_seleccion_tipo_seq = gtk.HBox()
+        self.hbox_seleccion_tipo_seq.pack_start(self.tipo_seq_label,expand=False, fill=False, padding = 30)
+        self.hbox_seleccion_tipo_seq.pack_start(self.selec_tipo_seq,expand=False, fill=False)
+        
+        # inicializamos las listas
+        self.hbox_mensaje_seleccion_seq = []
+        
+        self.label_pais = []
+        self.label_especie = []
+        self.label_pais_especie = []
+        
+        self.mensaje_seleccion_ids = []
+        self.lista_ids = []
+
+        for i in range(2):
+            # mensaje de seleccion de secuencias 
+            self.hbox_mensaje_seleccion_seq.append(gtk.HBox())
+            self.hbox_mensaje_seleccion_seq[i].pack_start(self.mensaje_seleccion_seq[i],expand=False, fill=False, padding = 30)
+            
+            # seleccion de pais: label y combobox
+            self.label_pais.append(gtk.HBox())
+            self.label_pais[i].pack_start(self.seleccion_pais_label[i],expand=False, fill=False, padding = 30)
+            self.label_pais[i].pack_start(self.seleccion_pais[i])
+            # seleccion de especie: label y combobox
+            self.label_especie.append(gtk.HBox())
+            self.label_especie[i].pack_start(self.seleccion_especie_label[i],expand=False, fill=False, padding = 30)
+            self.label_especie[i].pack_start(self.seleccion_especie[i])
+            # union de la seleccion de pais y especie
+            self.label_pais_especie.append(gtk.HBox())
+            self.label_pais_especie[i].pack_start(self.label_pais[i],expand=False, fill=False)
+            self.label_pais_especie[i].pack_start(self.label_especie[i],expand=False, fill=False,padding = 40)
+
+            # mensaje de seleccion de id
+            self.mensaje_seleccion_ids.append(gtk.HBox())
+            self.mensaje_seleccion_ids[i].pack_start(self.seleccion_ids_label[i],expand=False, fill=False, padding = 30)
+
+            # lista de ids disponibles
+            self.lista_ids.append(gtk.HBox())
+            self.lista_ids[i].pack_start(self.scrolled_window[i], padding = 30)
+
+        # boton para agregar otra secuencia
+        self.hbox_boton_agregar_seq =  gtk.HBox()
+        self.hbox_boton_agregar_seq.pack_start(self.agregar_button,expand=False, fill=False,padding = 30)     
+
+        # seleccion tipo de alineamiento
+        self.box_seleccion_tipo_aling = gtk.HBox()
+        self.box_seleccion_tipo_aling.pack_start(self.mensaje_aling_type,expand=False, fill=False, padding = 30)
+        self.box_seleccion_tipo_aling.pack_start(self.combobox_align_type,expand=False, fill=False)
+
+        # boton de alineamiento
+        self.hbox_boton_aling =  gtk.HBox()
+        self.hbox_boton_aling.pack_start(self.mensaje_align_butoon,expand=False, fill=False, padding = 30)
+        self.hbox_boton_aling.pack_start(self.align_button,expand=False, fill=False)
 
         ########################
         #     Box Principal    #
         ########################
         self.box_main_alignM = gtk.VBox()
-        self.box_main_alignM.pack_start(self.tipo_seq_label)
 
-        self.add(self.box_main_alignM)
+        self.box_main_alignM.pack_start(self.hbox_seleccion_tipo_seq,expand=False, fill=False, padding = 30)
+        
+        for i in range(2):
+            self.box_main_alignM.pack_start(self.hbox_mensaje_seleccion_seq[i],expand=False, fill=False)
+            self.box_main_alignM.pack_start(self.label_pais_especie[i],expand=False, fill=False, padding = 10)
+            self.box_main_alignM.pack_start(self.mensaje_seleccion_ids[i],expand=False, fill=False)
+            self.box_main_alignM.pack_start(self.lista_ids[i], padding = 10)
+        
+        self.count_seqs = 2
+
+        self.box_main_alignM.pack_start(self.hbox_boton_agregar_seq,expand=False, fill=False, padding = 10)
+        self.box_main_alignM.pack_start(self.box_seleccion_tipo_aling,expand=False, fill=False, padding = 20)
+        self.box_main_alignM.pack_start(self.hbox_boton_aling,expand=False, fill=False,padding=10)
+        
+        self.scrolled_window_main.add_with_viewport(self.box_main_alignM)
+        self.add(self.scrolled_window_main)
+
         self.show_all()
 
 
     def on_destroy(self,widget):
         widget.hide()
 
+    def alignM_Button(self,win):
+        print("boton!!!")
+        self.box_main_alignM.remove(self.hbox_boton_agregar_seq)
+        self.box_main_alignM.remove(self.box_seleccion_tipo_aling)
+        self.box_main_alignM.remove(self.hbox_boton_aling)
+
+        ##################################
+        #    Creando nueva secuencia     #
+        ##################################
+        self.count_seqs = self.count_seqs+1
+        # mensaje de seleccion de la secuencia
+        self.mensaje_seleccion_seq.append(gtk.Label())
+        self.mensaje_seleccion_seq[self.count_seqs-1].set_markup("<b>Selecciona la secuencia: </b>")
+
+        ########## PAISES
+        # mensaje de selecion del pais
+        self.seleccion_pais_label.append(gtk.Label("País:"))
+        # ComoboxTex para elegir el pais
+        self.seleccion_pais.append(gtk.combo_box_new_text())
+        #self.seleccion_pais.append[self.count_seqs-1].connect("changed",self.on_changed_pais)
+        # Items del combobox (paises disponibles)
+        self.seleccion_pais[self.count_seqs-1].append_text("Argentina")
+        self.seleccion_pais[self.count_seqs-1].append_text("Australia")
+        self.seleccion_pais[self.count_seqs-1].append_text("Brasil")
+
+        ########## ESPECIES
+        # mensaje de seleccion de la especie
+        self.seleccion_especie_label.append(gtk.Label("Especie:"))
+        # ComoboxTex para elegir la especie
+        self.seleccion_especie.append(gtk.combo_box_new_text())
+        #self.seleccion_especie[self.count_seqs-1].connect("changed",self.on_changed_especie)
+        # Items del combobox (especies disponibles, inicialmente vacio)
+        self.seleccion_especie[self.count_seqs-1].append_text("------")
+
+        ########## TREEVIEW PARA LOS IDS
+        # mensaje de seleccion de ids
+        self.seleccion_ids_label.append(gtk.Label("Selecciona un id haciendo doble click sobre él:"))
+        # treeView para elegir el ID
+        self.treeview.append(gtk.TreeView())
+        #self.treeview[self.count_seqs-1].connect("row-activated", self.on_activated)
+
+        ########## STORE DE LOS IDS
+        # Items de los IDs (IDs disponibles, inicialmente vacio)
+        self.store_ids.append(gtk.ListStore(str))
+        self.store_ids[self.count_seqs-1].append(["----------------------"])
+        self.treeview[self.count_seqs-1].set_model(self.store_ids[self.count_seqs-1])
+
+        ########## COLUMNA DEL TREEVIEW
+        #self.rendererText = gtk.CellRendererText()
+        self.column.append(gtk.TreeViewColumn("Secuencias\nDisponibles", gtk.CellRendererText(), text=0))
+        # Agregando la columna al treeView
+        self.treeview[self.count_seqs-1].append_column(self.column[self.count_seqs-1])
+        self.treeview[self.count_seqs-1].set_headers_visible(False)
+        self.treeview[self.count_seqs-1].set_enable_search(True)
+
+        ########## SCROLLED WINDOW
+        self.scrolled_window.append(gtk.ScrolledWindow())
+        self.scrolled_window[self.count_seqs-1].add(self.treeview[self.count_seqs-1])
+
+        ###########################
+        #    Boxes Individuales   #
+        ###########################
+        # mensaje de seleccion de secuencias 
+        self.hbox_mensaje_seleccion_seq.append(gtk.HBox())
+        self.hbox_mensaje_seleccion_seq[self.count_seqs-1].pack_start(self.mensaje_seleccion_seq[self.count_seqs-1],expand=False, fill=False, padding = 30)
+
+        # seleccion de pais: label y combobox
+        self.label_pais.append(gtk.HBox())
+        self.label_pais[self.count_seqs-1].pack_start(self.seleccion_pais_label[self.count_seqs-1],expand=False, fill=False, padding = 30)
+        self.label_pais[self.count_seqs-1].pack_start(self.seleccion_pais[self.count_seqs-1])
+        # seleccion de especie: label y combobox
+        self.label_especie.append(gtk.HBox())
+        self.label_especie[self.count_seqs-1].pack_start(self.seleccion_especie_label[self.count_seqs-1],expand=False, fill=False, padding = 30)
+        self.label_especie[self.count_seqs-1].pack_start(self.seleccion_especie[self.count_seqs-1])
+        # union de la seleccion de pais y especie
+        self.label_pais_especie.append(gtk.HBox())
+        self.label_pais_especie[self.count_seqs-1].pack_start(self.label_pais[self.count_seqs-1],expand=False, fill=False)
+        self.label_pais_especie[self.count_seqs-1].pack_start(self.label_especie[self.count_seqs-1],expand=False, fill=False,padding = 40)
+
+        # mensaje de seleccion de id
+        self.mensaje_seleccion_ids.append(gtk.HBox())
+        self.mensaje_seleccion_ids[self.count_seqs-1].pack_start(self.seleccion_ids_label[self.count_seqs-1],expand=False, fill=False, padding = 30)
+
+        # lista de ids disponibles
+        self.lista_ids.append(gtk.HBox())
+        self.lista_ids[self.count_seqs-1].pack_start(self.scrolled_window[self.count_seqs-1], padding = 30)
+
+        ########################
+        #     Box Principal    #
+        ########################
+        self.box_main_alignM.pack_start(self.hbox_mensaje_seleccion_seq[self.count_seqs-1],expand=False, fill=False)
+        self.box_main_alignM.pack_start(self.label_pais_especie[self.count_seqs-1],expand=False, fill=False, padding = 10)
+        self.box_main_alignM.pack_start(self.mensaje_seleccion_ids[self.count_seqs-1],expand=False, fill=False)
+        self.box_main_alignM.pack_start(self.lista_ids[self.count_seqs-1], padding = 10)
+
+        self.box_main_alignM.pack_start(self.hbox_boton_agregar_seq,expand=False, fill=False, padding = 10)
+        self.box_main_alignM.pack_start(self.box_seleccion_tipo_aling,expand=False, fill=False, padding = 20)
+        self.box_main_alignM.pack_start(self.hbox_boton_aling,expand=False, fill=False,padding=10)
+
+        self.show_all()
 
 
 # Ventana Arbol Filogenetico
