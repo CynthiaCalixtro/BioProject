@@ -1087,7 +1087,7 @@ class anotherWinAlignM(gtk.Window):
         for i in range(2):
             # mensaje de seleccion de la secuencia
             self.mensaje_seleccion_seq.append(gtk.Label())
-            self.mensaje_seleccion_seq[i].set_markup("<b>Selecciona la secuencia: </b>")
+            self.mensaje_seleccion_seq[i].set_markup("<b>Selecciona la secuencia #"+str(i+1)+":</b>")
 
             ########## PAISES
             # mensaje de selecion del pais
@@ -1196,7 +1196,7 @@ class anotherWinAlignM(gtk.Window):
 
             # lista de ids disponibles
             self.lista_ids.append(gtk.HBox())
-            self.lista_ids[i].pack_start(self.scrolled_window[i], padding = 30)
+            self.lista_ids[i].pack_start(self.scrolled_window[i],padding = 30)
 
         # boton para agregar otra secuencia
         self.hbox_boton_agregar_seq =  gtk.HBox()
@@ -1215,7 +1215,7 @@ class anotherWinAlignM(gtk.Window):
         ########################
         #     Box Principal    #
         ########################
-        self.box_main_alignM = gtk.VBox()
+        self.box_main_alignM = gtk.VBox(homogeneous =True)
 
         self.box_main_alignM.pack_start(self.hbox_seleccion_tipo_seq,expand=False, fill=False, padding = 30)
         
@@ -1252,9 +1252,9 @@ class anotherWinAlignM(gtk.Window):
         self.count_seqs = self.count_seqs+1
         # mensaje de seleccion de la secuencia
         self.mensaje_seleccion_seq.append(gtk.Label())
-        self.mensaje_seleccion_seq[self.count_seqs-1].set_markup("<b>Selecciona la secuencia: </b>")
+        self.mensaje_seleccion_seq[self.count_seqs-1].set_markup("<b>Selecciona la secuencia #"+str(self.count_seqs)+":</b>")
 
-        ########## PAISES
+        ########## PAISES#
         # mensaje de selecion del pais
         self.seleccion_pais_label.append(gtk.Label("País:"))
         # ComoboxTex para elegir el pais
